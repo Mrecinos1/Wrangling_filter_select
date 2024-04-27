@@ -61,21 +61,26 @@ We often find that the whole data frame is not necessary or even helpful to answ
 This one is probably the most useful verb for data wrangling. You can see from the initial data check, there are 58788 movies. Some of these are even from before 1900! Let's consider only looking into movies that were made since the "New Hollywood" era, 1965 (according to a wikipedia search). How many movies does that include?
 
 ```{r}
-# Pay attention to the usage of the pipe
-movies %>%               # start with the full dataset, and then
-  filter(year >= 1965)   # give me only movies where the year is greater than or equal to 1965
-
+movies %>%            
+  filter(year >= 1965)%>%
+  filter(length > 60) %>%
+  filter(votes > 500, rating <= 9) 
+```
+ 
+ 
+# give me only movies where the year is greater than or equal to 1965
+ filter(year >= 1965)%>%
 # Some simple practice and review for using filters
-
+ 
 # How many movies since 1965 have a run-time greater than 60 minutes?
-
+filter(length > 60) %>%
 # Show all movies with more than 500 votes and an average rating of at least 9
-
+filter(votes > 500, rating <= 9) %>%
 # How many PG-13 movies are in this dataset? Remember to use quotations ("") when filtering characters/strings
-
+ filter("PG-13")
 # I want only movies with an MPAA rating over PG (there are no G movies). Hint: think about what you don't want and double check to see the filter completely worked.
 
-```
+
 
 
 Often there are a lot of missing values, or `NA`s, in the budget variable. This is another characteristic of real data, and one that we often need to deal with. The function, `is.na()` is useful here. `is.na()` will identify all of the missing values and evaluates automatically as a TRUE/FALSE for each row, which eliminates the need to use any logical symbols.
@@ -211,7 +216,14 @@ There were 1,248 movies released in 1995.
 
 ```{r}
 
+long_highrated_comedies <- movies %>%
+  
+filter(Comedy == 1, !mpaa  == "", rating > 8, lenght > 120) %>%
+select(title, year, rating, length, mpaa)
+
+long_highrated_comedies
 ```
+There were 4 comedies which were Big Fish, forrest Gump, Homen Que Copiava o, and The Incredible with an MPAA rating, over 120 minutes having a rating above 8.
 
 3. Create a subset of only Harry Potter movies with the title, rating, budget, and votes. Which movies are included in this data? Which is highest rated? Which has the most votes on imdb.com?
 
