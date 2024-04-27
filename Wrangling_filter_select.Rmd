@@ -215,10 +215,9 @@ There were 1,248 movies released in 1995.
 2. Which Comedies with an MPAA rating, over 120 minutes have a rating above 8?
 
 ```{r}
-
 long_highrated_comedies <- movies %>%
-  
-filter(Comedy == 1, !mpaa  == "", rating > 8, lenght > 120) %>%
+
+filter(Comedy == 1, !mpaa == "", rating > 8, length > 120) %>%
 select(title, year, rating, length, mpaa)
 
 long_highrated_comedies
@@ -228,14 +227,26 @@ There were 4 comedies which were Big Fish, forrest Gump, Homen Que Copiava o, an
 3. Create a subset of only Harry Potter movies with the title, rating, budget, and votes. Which movies are included in this data? Which is highest rated? Which has the most votes on imdb.com?
 
 ```{r}
+HarryPotter <- movies %>%
 
+filter( str_detect(title, "Harry Potter")) %>%
+select(title,rating,budget, votes)
+
+HarryPotter
 ```
-
+the harry potter movies includes in this data are Harry potter and the Chamber of secrets, Harry potter and the prisoner of Azkaban, and Harry Potter and the Sorcerer's stone. The highest rated is Harry Potter and the prisoner of Azkaban with a rating or 7.8. Harry Potter and the Sorcerer's stone has the most votes on imdb.com 46741
 4. What is the highest budget for a movie that is an Animation or Comedy with at least 100 votes?
 
 ```{r}
+long_highrated_comedies_animation <- movies %>%
 
+filter(Comedy == 1, Animation == 1, votes > 100) %>%
+select(title, budget, votes) %>%
+arrange(desc(budget))
+
+long_highrated_comedies
 ```
+The highest budget for a movie that is an animation or a comedy is Wild WIld West, their budget is 170,000,000 with 19078.
 
 5. Is your favorite movie in the dataset? What other questions could you ask or answer using `filter()`, `select()`, and `arrange()`?
 
